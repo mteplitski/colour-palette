@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { getRandomPalette } from '../util/colour';
 import { Palette } from '../components';
 
+const INITIAL_PALETTE = getRandomPalette();
+
 const StyledButton = styled.button`
   margin-top: 16px;
   cursor: pointer;
@@ -23,19 +25,17 @@ const StyledHeading = styled.h1`
 `;
 
 const PaletteGenerator = () => {
-  const [palette, setPalette] = useState(getRandomPalette());
+  const [palette, setPalette] = useState(INITIAL_PALETTE);
   const { colours, light, dark } = palette;
 
   return (
-    colours && (
-      <StyledContainer color={light}>
-        <StyledHeading color={dark}>Colours!!</StyledHeading>
-        <Palette colours={colours} />
-        <StyledButton onClick={() => setPalette(getRandomPalette())}>
-          New Palette
-        </StyledButton>
-      </StyledContainer>
-    )
+    <StyledContainer color={light}>
+      <StyledHeading color={dark}>Colours!!</StyledHeading>
+      <Palette colours={colours} />
+      <StyledButton onClick={() => setPalette(getRandomPalette())}>
+        New Palette
+      </StyledButton>
+    </StyledContainer>
   );
 };
 

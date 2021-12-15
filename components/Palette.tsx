@@ -6,15 +6,14 @@ interface PaletteProps {
 }
 
 const PaletteContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
+  display: grid;
+  grid-auto-flow: column;
+  column-gap: 32px;
 `;
 
 const PaletteColour = styled.div`
-  height: 100px;
-  width: 100px;
-  margin-right: 16px;
+  height: 200px;
+  width: 200px;
   border-radius: 32px;
   background-color: ${(props: any) => props.color};
 `;

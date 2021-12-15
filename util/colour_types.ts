@@ -6,3 +6,9 @@ export interface TLCHColour {
 }
 
 export type TLCHPalette = TLCHColour[];
+
+export interface TPalette {
+  light: string;
+  dark: string;
+  colours: string[];
+}
