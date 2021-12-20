@@ -1,5 +1,5 @@
 import { formatHex } from 'culori';
-import { TLCHPalette, TLCHColour } from './colour_types';
+import { TLCHColour, TLCHPaletteSet } from './colour_types';
 
 const targetHueSteps: Record<string, number[]> = {
   analogous: [0, 30, 60],
@@ -30,7 +30,7 @@ const createScientificPalettes = (baseColour: TLCHColour) =>
         })
       ),
     }),
-    {} as Record<string, TLCHPalette>
+    {} as TLCHPaletteSet
   );
 
 const getMonochromePalette = (baseColour: TLCHColour) => {

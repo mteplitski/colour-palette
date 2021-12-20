@@ -12,3 +12,13 @@ export interface TPalette {
   dark: string;
   colours: string[];
 }
+
+export type TLCHPaletteSet = Record<string, TLCHPalette>;
+
+export type TDiscoverPaletteSet = Record<
+  string,
+  {
+    colors: TLCHColour[];
+    variance: number;
+  }
+>;
