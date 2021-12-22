@@ -7,8 +7,13 @@ body {
 }
 
 a {
-  color: inherit;
   text-decoration: none;
+  color: rgb(0, 127, 255);
+}
+
+a:hover {
+  color: rgb(0, 127, 255);
+  text-decoration: underline;
 }
 
 * {

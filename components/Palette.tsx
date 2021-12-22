@@ -3,25 +3,60 @@ import styled from 'styled-components';
 
 interface PaletteProps {
   colours: string[];
+  light?: string;
+  dark?: string;
+}
+
+interface ColourCardProps {
+  colour: string;
+  key: string;
+  label: string;
 }
 
 const PaletteContainer = styled.div`
   display: grid;
-  grid-auto-flow: column;
+  grid-template-columns: repeat(3, 1fr);
   column-gap: 32px;
+  row-gap: 32px;
 `;
 
 const PaletteColour = styled.div`
-  height: 200px;
-  width: 200px;
+  height: 128px;
+  width: 128px;
   border-radius: 32px;
   background-color: ${(props: any) => props.color};
 `;
 
-const Palette = ({ colours }: PaletteProps) => (
+const ColourCardContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ColourCardLabel = styled.h3`
+  text-align: center;
+`;
+
+const ColourCard = ({ key, colour, label }: ColourCardProps) => (
+  <ColourCardContainer key={key}>
+    <PaletteColour color={colour} />
+    <ColourCardLabel>
+      {label}
+      <br />
+      {colour}
+    </ColourCardLabel>
+  </ColourCardContainer>
+);
+
+const Palette = ({ colours, light, dark }: PaletteProps) => (
   <PaletteContainer>
-    {colours.map((colour) => (
-      <PaletteColour key={colour} color={colour} />
+    <ColourCard key={colours[0]} colour={colours[0]} label="Main Colour" />
+    {light && <ColourCard key={light} colour={light} label="Background" />}
+    {dark && <ColourCard key={dark} colour={dark} label="Text" />}
+    {colours.slice(1).map((colour, index) => (
+      <ColourCard key={colour} colour={colour} label={`Accent ${index + 1}`} />
     ))}
   </PaletteContainer>
 );
