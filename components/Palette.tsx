@@ -20,7 +20,7 @@ const PaletteContainer = styled.div`
   column-gap: 16px;
   row-gap: 16px;
 
-  @media ${device.mobileL} {
+  @media (min-width: 700px) {
     grid-template-columns: repeat(3, 1fr);
     column-gap: 32px;
     row-gap: 32px;
@@ -33,7 +33,7 @@ const PaletteColour = styled.div`
   border-radius: 16px;
   background-color: ${(props: any) => props.color};
 
-  @media ${device.mobileL} {
+  @media (min-width: 700px) {
     height: 128px;
     width: 128px;
     border-radius: 32px;
