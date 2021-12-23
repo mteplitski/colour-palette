@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Palette } from '../components';
-import { getRandomPalette } from '../util/colour';
+import { getRandomPalette } from '../util/palette';
 import device from '../util/device';
 
 const INITIAL_PALETTE = getRandomPalette();
@@ -79,14 +79,12 @@ const StyledP = styled.p`
 // based on the button component from MUI: https://mui.com/components/buttons/
 const StyledButton = styled.button`
   cursor: pointer;
-  background-color: rgb(0, 127, 255);
+  background-color: #007fff;
   padding: 12px 20px;
   border-radius: 10px;
-  color: rgb(255, 255, 255);
+  color: white;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: rgb(61 71 82 / 10%) 0px 4px 20px 0px,
-    rgb(0 127 255 / 0%) 0px 0px 0px 0px;
   border: none;
   margin-bottom 8px;
 
@@ -112,7 +110,11 @@ const PaletteGenerator = () => {
         </HeadingContainer>
         <StyledP>
           Randomly-generated colour palettes based on{' '}
-          <a href="https://en.wikipedia.org/wiki/Color_scheme" target="_blank">
+          <a
+            href="https://en.wikipedia.org/wiki/Color_scheme"
+            target="_blank"
+            rel="noreferrer"
+          >
             colour wheel theory
           </a>
           . Use these anywhere!

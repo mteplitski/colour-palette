@@ -1,5 +1,5 @@
 import { formatHex } from 'culori';
-import { TLCHColour, TLCHPaletteSet } from './colour_types';
+import { TLCHColour, TLCHPaletteSet } from '../types/colour';
 
 const targetHueSteps: Record<string, number[]> = {
   analogous: [0, 30, 60],
