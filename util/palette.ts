@@ -1,5 +1,10 @@
-import { formatHex } from 'culori';
 import { TLCHColour, TLCHPaletteSet } from '../types/colour';
+import { colord, extend } from 'colord';
+import lchPlugin from 'colord/plugins/lch';
+
+extend([lchPlugin]);
+
+const toHex = (colour: TLCHColour) => colord(colour).toHex();
 
 const targetHueSteps: Record<string, number[]> = {
   analogous: [0, 30, 60],
@@ -52,7 +57,6 @@ export const getRandomPalette = () => {
     l: 50 + Math.random() * 10,
     c: 60 + Math.random() * 10,
     h: Math.random() * 360,
-    mode: 'lch',
   };
 
   let palette;
@@ -65,21 +69,21 @@ export const getRandomPalette = () => {
   }
 
   return {
-    colours: palette.map((colour) => formatHex(colour)),
+    colours: palette.map((colour) => toHex(colour)),
     light: lighten(palette[0]),
     dark: darken(palette[0]),
   };
 };
 
 const lighten = (base: TLCHColour) =>
-  formatHex({
+  toHex({
     ...base,
     l: 98,
     c: 10,
   });
 
 const darken = (base: TLCHColour) =>
-  formatHex({
+  toHex({
     ...base,
     l: 10,
     c: 20,
