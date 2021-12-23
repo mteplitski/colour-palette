@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import device from '../util/device';
 
 interface PaletteProps {
   colours: string[];
@@ -15,28 +16,46 @@ interface ColourCardProps {
 
 const PaletteContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  column-gap: 32px;
-  row-gap: 32px;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 16px;
+  row-gap: 16px;
+
+  @media ${device.mobileL} {
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 32px;
+    row-gap: 32px;
+  }
 `;
 
 const PaletteColour = styled.div`
-  height: 128px;
-  width: 128px;
-  border-radius: 32px;
+  height: 64px;
+  width: 64px;
+  border-radius: 16px;
   background-color: ${(props: any) => props.color};
+
+  @media ${device.mobileL} {
+    height: 128px;
+    width: 128px;
+    border-radius: 32px;
+  }
 `;
 
 const ColourCardContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 `;
 
 const ColourCardLabel = styled.h3`
   text-align: center;
+  font-size: 16px;
+
+  @media ${device.mobileL} {
+    font-size: 24px;
+    font-weight: 500;
+  }
 `;
 
 const ColourCard = ({ key, colour, label }: ColourCardProps) => (

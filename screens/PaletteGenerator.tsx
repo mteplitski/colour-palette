@@ -2,17 +2,21 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Palette } from '../components';
 import { getRandomPalette } from '../util/colour';
+import device from '../util/device';
 
 const INITIAL_PALETTE = getRandomPalette();
 
 const PageBackground = styled.div`
   width: 100%;
-  height: 100vh;
   background-color: ${(props: any) => props.color};
-  padding: 64px 64px 0;
+  padding: 24px 24px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media ${device.mobileL} {
+    padding: 64px 64px 0;
+  }
 `;
 
 const PageContainer = styled.div`
@@ -20,33 +24,61 @@ const PageContainer = styled.div`
   max-width: 900px;
   height: 100%;
   background-color: white;
-  padding: 64px;
-  border-radius: 64px 64px 0px 0px;
+  padding: 32px;
+  border-radius: 24px 24px 0px 0px;
+
+  @media ${device.mobileL} {
+    padding: 64px;
+    border-radius: 64px 64px 0px 0px;
+  }
 `;
 
 const HeadingContainer = styled.div`
   width: 100%;
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+
+  @media ${device.mobileL} {
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+  }
 `;
 
 const StyledHeading = styled.h1`
   color: ${(props: any) => props.color};
   margin-bottom: 0px;
   margin-top: 0px;
+  font-size: 24px;
+  margin-bottom: 8px;
+
+  @media ${device.mobileL} {
+    margin-bottom: 0px;
+    font-size: 30px;
+  }
+
+  @media ${device.tablet} {
+    font-size: 36px;
+  }
 `;
 
 const StyledP = styled.p`
   color: ${(props: any) => props.color};
-  margin-bottom: 32px;
+  font-size: 16px;
+  margin-top: 4px;
+  margin-bottom: 16px;
+
+  @media ${device.mobileL} {
+    margin-bottom: 32px;
+    font-size: 24px;
+    margin-top: 12px;
+  }
 `;
 
 // based on the button component from MUI: https://mui.com/components/buttons/
 const StyledButton = styled.button`
   cursor: pointer;
-  margin-left: 16px;
   background-color: rgb(0, 127, 255);
   padding: 12px 20px;
   border-radius: 10px;
@@ -56,6 +88,13 @@ const StyledButton = styled.button`
   box-shadow: rgb(61 71 82 / 10%) 0px 4px 20px 0px,
     rgb(0 127 255 / 0%) 0px 0px 0px 0px;
   border: none;
+  margin-bottom 8px;
+
+  @media ${device.mobileL} {
+    margin-left: 16px;
+    margin-bottom: 0px;
+    font-size: 14px;
+  }
 `;
 
 const PaletteGenerator = () => {
