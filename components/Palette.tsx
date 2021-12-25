@@ -5,13 +5,14 @@ import { toast } from 'react-toastify';
 
 interface PaletteProps {
   colours: string[];
-  light?: string;
-  dark?: string;
+  light: string;
+  dark: string;
 }
 
 interface ColourCardProps {
   colour: string;
   label: string;
+  labelColour: string;
 }
 
 const PaletteContainer = styled.div`
@@ -63,6 +64,7 @@ const ColourCardContainer = styled.div`
 const ColourCardLabel = styled.h3`
   text-align: center;
   font-size: 16px;
+  color: ${({ color }) => color};
 
   @media ${device.mobileL} {
     font-size: 24px;
@@ -79,10 +81,10 @@ const onCopy = (colour: string, label: string) => {
   toast(`Copied ${label} (${colour}) to clipboard!`);
 };
 
-const ColourCard = ({ colour, label }: ColourCardProps) => (
+const ColourCard = ({ colour, label, labelColour }: ColourCardProps) => (
   <ColourCardContainer onClick={() => onCopy(colour, label)}>
     <PaletteColour color={colour} />
-    <ColourCardLabel>
+    <ColourCardLabel color={labelColour}>
       {label}
       <br />
       {colour}
@@ -92,11 +94,30 @@ const ColourCard = ({ colour, label }: ColourCardProps) => (
 
 const Palette = ({ colours, light, dark }: PaletteProps) => (
   <PaletteContainer>
-    <ColourCard key={colours[0]} colour={colours[0]} label="Main Colour" />
-    {light && <ColourCard key={light} colour={light} label="Background" />}
-    {dark && <ColourCard key={dark} colour={dark} label="Text" />}
+    <ColourCard
+      key={colours[0]}
+      colour={colours[0]}
+      label="Main Colour"
+      labelColour={light}
+    />
+    {light && (
+      <ColourCard
+        key={light}
+        colour={light}
+        label="Background"
+        labelColour={light}
+      />
+    )}
+    {dark && (
+      <ColourCard key={dark} colour={dark} label="Text" labelColour={light} />
+    )}
     {colours.slice(1).map((colour, index) => (
-      <ColourCard key={colour} colour={colour} label={`Accent ${index + 1}`} />
+      <ColourCard
+        key={colour}
+        colour={colour}
+        label={`Accent ${index + 1}`}
+        labelColour={light}
+      />
     ))}
   </PaletteContainer>
 );

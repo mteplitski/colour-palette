@@ -23,7 +23,7 @@ const PageContainer = styled.div`
   width: 100%;
   max-width: 900px;
   height: 100%;
-  background-color: white;
+  background-color: ${({ color }) => color};
   padding: 32px;
   border-radius: 24px 24px 0px 0px;
 
@@ -111,10 +111,10 @@ const PaletteGenerator = () => {
   const { colours, light, dark } = palette;
 
   return (
-    <PageBackground color={light}>
-      <PageContainer>
+    <PageBackground color="black">
+      <PageContainer color={dark}>
         <HeadingContainer>
-          <StyledHeading color={dark}>Colour Scheme Generator </StyledHeading>
+          <StyledHeading color={light}>Colour Scheme Generator </StyledHeading>
           <StyledButton
             onClick={() => setPalette(getRandomPalette())}
             color={colours[1]}
@@ -122,7 +122,7 @@ const PaletteGenerator = () => {
             New Palette
           </StyledButton>
         </HeadingContainer>
-        <StyledP>
+        <StyledP color={light}>
           Randomly-generated colour palettes based on{' '}
           <StyledLink
             href="https://en.wikipedia.org/wiki/Color_scheme"

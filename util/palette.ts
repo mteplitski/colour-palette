@@ -85,6 +85,6 @@ const lighten = (base: TLCHColour) =>
 const darken = (base: TLCHColour) =>
   toHex({
     ...base,
-    l: 10,
+    l: 1,
     c: 20,
   });
