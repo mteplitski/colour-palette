@@ -1,4 +1,6 @@
-## Colour Palette
+# Colour Palette
+
+(Click here to use the tool)[https://colour-palette.vercel.app/]
 
 Create a beautiful colour palette for your web page or project! Inspired by [Coloring With Code — A Programmatic Approach To Design](https://tympanus.net/codrops/2021/12/07/coloring-with-code-a-programmatic-approach-to-design/), written by George Francis and shared by CodePen.
 

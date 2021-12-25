@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import device from '../util/device';
+import { toast } from 'react-toastify';
 
 interface PaletteProps {
   colours: string[];
@@ -10,7 +11,6 @@ interface PaletteProps {
 
 interface ColourCardProps {
   colour: string;
-  key: string;
   label: string;
 }
 
@@ -24,6 +24,7 @@ const PaletteContainer = styled.div`
     grid-template-columns: repeat(3, 1fr);
     column-gap: 32px;
     row-gap: 32px;
+    padding-top: 8px;
   }
 `;
 
@@ -31,7 +32,7 @@ const PaletteColour = styled.div`
   height: 64px;
   width: 64px;
   border-radius: 16px;
-  background-color: ${(props: any) => props.color};
+  background-color: ${({ color }) => color};
 
   @media (min-width: 700px) {
     height: 128px;
@@ -46,6 +47,17 @@ const ColourCardContainer = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+
+  @media ${device.tablet} {
+    padding: 8px;
+    border: 1px solid white;
+    border-radius: 16px;
+
+    &:hover {
+      cursor: pointer;
+      border: 1px solid black;
+    }
+  }
 `;
 
 const ColourCardLabel = styled.h3`
@@ -56,10 +68,19 @@ const ColourCardLabel = styled.h3`
     font-size: 24px;
     font-weight: 500;
   }
+
+  @media ${device.tablet} {
+    margin-bottom: 0px;
+  }
 `;
 
-const ColourCard = ({ key, colour, label }: ColourCardProps) => (
-  <ColourCardContainer key={key}>
+const onCopy = (colour: string, label: string) => {
+  navigator.clipboard.writeText(colour);
+  toast(`Copied ${label} (${colour}) to clipboard!`);
+};
+
+const ColourCard = ({ colour, label }: ColourCardProps) => (
+  <ColourCardContainer onClick={() => onCopy(colour, label)}>
     <PaletteColour color={colour} />
     <ColourCardLabel>
       {label}

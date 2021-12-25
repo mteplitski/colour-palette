@@ -8,7 +8,7 @@ interface TColourTableProps {
 }
 
 const ColourTableCell = styled.div`
-  background-color: ${(props: any) => props.color};
+  background-color: ${({ color }) => color};
   height: 64px;
 `;
 
