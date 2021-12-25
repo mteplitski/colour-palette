@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Palette } from '../components';
 import { getRandomPalette } from '../util/palette';
 import device from '../util/device';
-
-const INITIAL_PALETTE = getRandomPalette();
+import { ToastContainer } from 'react-toastify';
+import { TNullablePalette } from '../types/colour';
 
 const PageBackground = styled.div`
   width: 100%;
-  background-color: ${(props: any) => props.color};
+  background-color: ${({ color }) => color};
   padding: 24px 24px 0;
   display: flex;
   flex-direction: column;
@@ -47,7 +47,7 @@ const HeadingContainer = styled.div`
 `;
 
 const StyledHeading = styled.h1`
-  color: ${(props: any) => props.color};
+  color: ${({ color }) => color};
   margin-bottom: 0px;
   margin-top: 0px;
   font-size: 24px;
@@ -64,7 +64,7 @@ const StyledHeading = styled.h1`
 `;
 
 const StyledP = styled.p`
-  color: ${(props: any) => props.color};
+  color: ${({ color }) => color};
   font-size: 16px;
   margin-top: 4px;
   margin-bottom: 16px;
@@ -76,10 +76,14 @@ const StyledP = styled.p`
   }
 `;
 
+const StyledLink = styled.a`
+  color: ${({ color }) => color};
+`;
+
 // based on the button component from MUI: https://mui.com/components/buttons/
 const StyledButton = styled.button`
   cursor: pointer;
-  background-color: #007fff;
+  background-color: ${({ color }) => color};
   padding: 12px 20px;
   border-radius: 10px;
   color: white;
@@ -91,12 +95,19 @@ const StyledButton = styled.button`
   @media ${device.mobileL} {
     margin-left: 16px;
     margin-bottom: 0px;
-    font-size: 14px;
+    font-size: 18px;
+    font-weight: bold;
   }
 `;
 
 const PaletteGenerator = () => {
-  const [palette, setPalette] = useState(INITIAL_PALETTE);
+  const [palette, setPalette] = useState(null as TNullablePalette);
+  useEffect(() => setPalette(getRandomPalette()), []);
+
+  if (!palette) {
+    return null;
+  }
+
   const { colours, light, dark } = palette;
 
   return (
@@ -104,23 +115,28 @@ const PaletteGenerator = () => {
       <PageContainer>
         <HeadingContainer>
           <StyledHeading color={dark}>Colour Scheme Generator </StyledHeading>
-          <StyledButton onClick={() => setPalette(getRandomPalette())}>
+          <StyledButton
+            onClick={() => setPalette(getRandomPalette())}
+            color={colours[1]}
+          >
             New Palette
           </StyledButton>
         </HeadingContainer>
         <StyledP>
           Randomly-generated colour palettes based on{' '}
-          <a
+          <StyledLink
             href="https://en.wikipedia.org/wiki/Color_scheme"
             target="_blank"
             rel="noreferrer"
+            color={colours[1]}
           >
             colour wheel theory
-          </a>
+          </StyledLink>
           . Use these anywhere!
         </StyledP>
         <Palette colours={colours} light={light} dark={dark} />
       </PageContainer>
+      <ToastContainer hideProgressBar={true} autoClose={2000} />
     </PageBackground>
   );
 };

@@ -12,4 +12,6 @@ export interface TPalette {
   colours: string[];
 }
 
+export type TNullablePalette = null | TPalette;
+
 export type TLCHPaletteSet = Record<string, TLCHPalette>;
