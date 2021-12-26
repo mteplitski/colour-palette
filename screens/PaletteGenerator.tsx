@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Palette } from '../components';
-import { getRandomPalette } from '../util/palette';
 import device from '../util/device';
 import { ToastContainer } from 'react-toastify';
-import { TNullablePalette } from '../types/colour';
+import { usePaletteContext } from '../contexts/PaletteContext';
 
 const PageBackground = styled.div`
   width: 100%;
@@ -80,7 +79,6 @@ const StyledLink = styled.a`
   color: ${({ color }) => color};
 `;
 
-// based on the button component from MUI: https://mui.com/components/buttons/
 const StyledButton = styled.button`
   cursor: pointer;
   background-color: ${({ color }) => color};
@@ -101,11 +99,10 @@ const StyledButton = styled.button`
 `;
 
 const PaletteGenerator = () => {
-  const [palette, setPalette] = useState(null as TNullablePalette);
-  useEffect(() => setPalette(getRandomPalette()), []);
+  const { palette, newPalette } = usePaletteContext();
 
   if (!palette) {
-    return null;
+    return <h1>No Palette</h1>;
   }
 
   const { colours, light, dark } = palette;
@@ -115,10 +112,7 @@ const PaletteGenerator = () => {
       <PageContainer color={dark}>
         <HeadingContainer>
           <StyledHeading color={light}>Colour Scheme Generator </StyledHeading>
-          <StyledButton
-            onClick={() => setPalette(getRandomPalette())}
-            color={colours[1]}
-          >
+          <StyledButton onClick={() => newPalette()} color={colours[1]}>
             New Palette
           </StyledButton>
         </HeadingContainer>

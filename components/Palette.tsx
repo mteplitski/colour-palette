@@ -51,12 +51,12 @@ const ColourCardContainer = styled.div`
 
   @media ${device.tablet} {
     padding: 8px;
-    border: 1px solid white;
+    border: 1px solid transparent;
     border-radius: 16px;
 
     &:hover {
       cursor: pointer;
-      border: 1px solid black;
+      border: 1px solid white;
     }
   }
 `;
