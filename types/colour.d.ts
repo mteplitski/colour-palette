@@ -20,4 +20,5 @@ export interface Theme {
   text: string;
   accents: string[];
   main: string;
+  mode: string;
 }

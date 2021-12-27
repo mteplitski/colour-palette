@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { Palette } from '../components';
 import device from '../util/device';
@@ -99,7 +99,10 @@ const StyledButton = styled.button`
 `;
 
 const PaletteGenerator = () => {
-  const { palette, newPalette, theme } = usePaletteContext();
+  const { palette, newPalette, theme, toggleDarkMode } = usePaletteContext();
+
+  // TODO: Remove and find a better solution
+  useEffect(() => newPalette(), []);
 
   if (!palette) {
     return <h1>No Palette</h1>;
@@ -113,6 +116,9 @@ const PaletteGenerator = () => {
             <StyledHeading>Colour Scheme Generator </StyledHeading>
             <StyledButton onClick={() => newPalette()}>
               New Palette
+            </StyledButton>
+            <StyledButton onClick={() => toggleDarkMode()}>
+              Toggle Mode
             </StyledButton>
           </HeadingContainer>
           <StyledP>

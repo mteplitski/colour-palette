@@ -88,15 +88,17 @@ const ColourCard = ({ colour, label }: ColourCardProps) => (
 
 const Palette = () => {
   const { theme } = usePaletteContext();
+  // const backgroundColour =
+  //   mode === 'light' ? theme.generatorBackground : theme.pageBackground;
 
   return (
     <PaletteContainer>
       <ColourCard key={theme.main} colour={theme.main} label="Main Colour" />
-      <ColourCard
-        key={theme.pageBackground}
-        colour={theme.pageBackground}
+      {/* <ColourCard
+        key={backgroundColour}
+        colour={backgroundColour}
         label="Background"
-      />
+      /> */}
       <ColourCard key={theme.text} colour={theme.text} label="Text" />
       {theme.accents.map((colour, index) => (
         <ColourCard

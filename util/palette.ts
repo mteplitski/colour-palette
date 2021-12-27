@@ -6,6 +6,12 @@ extend([lchPlugin]);
 
 const toHex = (colour: LCHColour) => colord(colour).toHex();
 
+export const DEFAULT_PALETTE = {
+  colours: [] as string[],
+  dark: 'black',
+  light: 'white',
+};
+
 const targetHueSteps: Record<string, number[]> = {
   analogous: [0, 30, 60],
   triadic: [0, 120, 240],
