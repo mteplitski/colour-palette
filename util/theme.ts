@@ -14,8 +14,8 @@ export const getThemeFromPalette = (palette: Palette, mode: string) => {
   const isLightMode = mode === 'light';
 
   return {
-    pageBackground: isLightMode ? 'white' : dark,
-    generatorBackground: isLightMode ? light : 'black',
+    pageBackground: isLightMode ? light : dark,
+    generatorBackground: isLightMode ? 'white' : 'black',
     text: isLightMode ? dark : light,
     main: colours[0],
     accents: colours.slice(1),

@@ -50,7 +50,7 @@ const ColourCardContainer = styled.div`
 
     &:hover {
       cursor: pointer;
-      border: 1px solid white;
+      border: 1px solid grey;
     }
   }
 `;
@@ -88,24 +88,18 @@ const ColourCard = ({ colour, label }: ColourCardProps) => (
 
 const Palette = () => {
   const { theme } = usePaletteContext();
-  // const backgroundColour =
-  //   mode === 'light' ? theme.generatorBackground : theme.pageBackground;
 
   return (
     <PaletteContainer>
-      <ColourCard key={theme.main} colour={theme.main} label="Main Colour" />
-      {/* <ColourCard
-        key={backgroundColour}
-        colour={backgroundColour}
+      <ColourCard key="main" colour={theme.main} label="Main Colour" />
+      <ColourCard
+        key="background"
+        colour={theme.pageBackground}
         label="Background"
-      /> */}
-      <ColourCard key={theme.text} colour={theme.text} label="Text" />
+      />
+      <ColourCard key="text" colour={theme.text} label="Text" />
       {theme.accents.map((colour, index) => (
-        <ColourCard
-          key={colour}
-          colour={colour}
-          label={`Accent ${index + 1}`}
-        />
+        <ColourCard key={index} colour={colour} label={`Accent ${index + 1}`} />
       ))}
     </PaletteContainer>
   );
