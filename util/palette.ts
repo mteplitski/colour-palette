@@ -1,10 +1,10 @@
-import { TLCHColour, TLCHPaletteSet } from '../types/colour';
+import { LCHColour, LCHPaletteSet } from '../types/colour';
 import { colord, extend } from 'colord';
 import lchPlugin from 'colord/plugins/lch';
 
 extend([lchPlugin]);
 
-const toHex = (colour: TLCHColour) => colord(colour).toHex();
+const toHex = (colour: LCHColour) => colord(colour).toHex();
 
 const targetHueSteps: Record<string, number[]> = {
   analogous: [0, 30, 60],
@@ -22,7 +22,7 @@ const adjustHue = (val: number) => {
   return val % 360;
 };
 
-const createScientificPalettes = (baseColour: TLCHColour) =>
+const createScientificPalettes = (baseColour: LCHColour) =>
   Object.keys(targetHueSteps).reduce(
     (palettes, currentPaletteType) => ({
       ...palettes,
@@ -35,10 +35,10 @@ const createScientificPalettes = (baseColour: TLCHColour) =>
         })
       ),
     }),
-    {} as TLCHPaletteSet
+    {} as LCHPaletteSet
   );
 
-const getMonochromePalette = (baseColour: TLCHColour) => {
+const getMonochromePalette = (baseColour: LCHColour) => {
   const lighterColour = {
     ...baseColour,
     l: 20,
@@ -53,7 +53,7 @@ const getMonochromePalette = (baseColour: TLCHColour) => {
 };
 
 export const getRandomPalette = () => {
-  const base: TLCHColour = {
+  const base: LCHColour = {
     l: 50 + Math.random() * 10,
     c: 60 + Math.random() * 10,
     h: Math.random() * 360,
@@ -75,14 +75,14 @@ export const getRandomPalette = () => {
   };
 };
 
-const lighten = (base: TLCHColour) =>
+const lighten = (base: LCHColour) =>
   toHex({
     ...base,
     l: 98,
     c: 10,
   });
 
-const darken = (base: TLCHColour) =>
+const darken = (base: LCHColour) =>
   toHex({
     ...base,
     l: 1,

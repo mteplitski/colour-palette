@@ -1,17 +1,23 @@
-export interface TLCHColour {
+export interface LCHColour {
   l: number;
   c: number;
   h: number;
 }
 
-export type TLCHPalette = TLCHColour[];
+export type LCHPalette = LCHColour[];
 
-export interface TPalette {
+export interface Palette {
   light: string;
   dark: string;
   colours: string[];
 }
 
-export type TNullablePalette = null | TPalette;
+export type LCHPaletteSet = Record<string, LCHPalette>;
 
-export type TLCHPaletteSet = Record<string, TLCHPalette>;
+export interface Theme {
+  pageBackground: string;
+  generatorBackground: string;
+  text: string;
+  accents: string[];
+  main: string;
+}

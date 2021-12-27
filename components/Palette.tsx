@@ -2,17 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import device from '../util/device';
 import { toast } from 'react-toastify';
-
-interface PaletteProps {
-  colours: string[];
-  light: string;
-  dark: string;
-}
+import { usePaletteContext } from '../contexts/PaletteContext';
 
 interface ColourCardProps {
   colour: string;
   label: string;
-  labelColour: string;
 }
 
 const PaletteContainer = styled.div`
@@ -64,7 +58,7 @@ const ColourCardContainer = styled.div`
 const ColourCardLabel = styled.h3`
   text-align: center;
   font-size: 16px;
-  color: ${({ color }) => color};
+  color: ${({ theme }) => theme.text};
 
   @media ${device.mobileL} {
     font-size: 24px;
@@ -81,10 +75,10 @@ const onCopy = (colour: string, label: string) => {
   toast(`Copied ${label} (${colour}) to clipboard!`);
 };
 
-const ColourCard = ({ colour, label, labelColour }: ColourCardProps) => (
+const ColourCard = ({ colour, label }: ColourCardProps) => (
   <ColourCardContainer onClick={() => onCopy(colour, label)}>
     <PaletteColour color={colour} />
-    <ColourCardLabel color={labelColour}>
+    <ColourCardLabel>
       {label}
       <br />
       {colour}
@@ -92,34 +86,27 @@ const ColourCard = ({ colour, label, labelColour }: ColourCardProps) => (
   </ColourCardContainer>
 );
 
-const Palette = ({ colours, light, dark }: PaletteProps) => (
-  <PaletteContainer>
-    <ColourCard
-      key={colours[0]}
-      colour={colours[0]}
-      label="Main Colour"
-      labelColour={light}
-    />
-    {light && (
+const Palette = () => {
+  const { theme } = usePaletteContext();
+
+  return (
+    <PaletteContainer>
+      <ColourCard key={theme.main} colour={theme.main} label="Main Colour" />
       <ColourCard
-        key={light}
-        colour={light}
+        key={theme.pageBackground}
+        colour={theme.pageBackground}
         label="Background"
-        labelColour={light}
       />
-    )}
-    {dark && (
-      <ColourCard key={dark} colour={dark} label="Text" labelColour={light} />
-    )}
-    {colours.slice(1).map((colour, index) => (
-      <ColourCard
-        key={colour}
-        colour={colour}
-        label={`Accent ${index + 1}`}
-        labelColour={light}
-      />
-    ))}
-  </PaletteContainer>
-);
+      <ColourCard key={theme.text} colour={theme.text} label="Text" />
+      {theme.accents.map((colour, index) => (
+        <ColourCard
+          key={colour}
+          colour={colour}
+          label={`Accent ${index + 1}`}
+        />
+      ))}
+    </PaletteContainer>
+  );
+};
 
 export default Palette;
