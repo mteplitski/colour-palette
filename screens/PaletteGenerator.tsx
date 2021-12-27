@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useEffect } from 'react';
+import styled, { ThemeProvider } from 'styled-components';
 import { Palette } from '../components';
-import { getRandomPalette } from '../util/palette';
 import device from '../util/device';
 import { ToastContainer } from 'react-toastify';
-import { TNullablePalette } from '../types/colour';
+import { usePaletteContext } from '../contexts/PaletteContext';
 
 const PageBackground = styled.div`
   width: 100%;
-  background-color: ${({ color }) => color};
+  background-color: ${({ theme }) => theme.pageBackground};
   padding: 24px 24px 0;
   display: flex;
   flex-direction: column;
@@ -23,7 +22,7 @@ const PageContainer = styled.div`
   width: 100%;
   max-width: 900px;
   height: 100%;
-  background-color: white;
+  background-color: ${({ theme }) => theme.generatorBackground};
   padding: 32px;
   border-radius: 24px 24px 0px 0px;
 
@@ -47,7 +46,7 @@ const HeadingContainer = styled.div`
 `;
 
 const StyledHeading = styled.h1`
-  color: ${({ color }) => color};
+  color: ${({ theme }) => theme.text};
   margin-bottom: 0px;
   margin-top: 0px;
   font-size: 24px;
@@ -64,7 +63,7 @@ const StyledHeading = styled.h1`
 `;
 
 const StyledP = styled.p`
-  color: ${({ color }) => color};
+  color: ${({ theme }) => theme.text};
   font-size: 16px;
   margin-top: 4px;
   margin-bottom: 16px;
@@ -77,13 +76,12 @@ const StyledP = styled.p`
 `;
 
 const StyledLink = styled.a`
-  color: ${({ color }) => color};
+  color: ${({ theme }) => theme.accents[0]};
 `;
 
-// based on the button component from MUI: https://mui.com/components/buttons/
 const StyledButton = styled.button`
   cursor: pointer;
-  background-color: ${({ color }) => color};
+  background-color: ${({ theme }) => theme.accents[0]};
   padding: 12px 20px;
   border-radius: 10px;
   color: white;
@@ -101,43 +99,44 @@ const StyledButton = styled.button`
 `;
 
 const PaletteGenerator = () => {
-  const [palette, setPalette] = useState(null as TNullablePalette);
-  useEffect(() => setPalette(getRandomPalette()), []);
+  const { palette, newPalette, theme, toggleDarkMode } = usePaletteContext();
+
+  // TODO: Remove and find a better solution
+  useEffect(() => newPalette(), []);
 
   if (!palette) {
-    return null;
+    return <h1>No Palette</h1>;
   }
 
-  const { colours, light, dark } = palette;
-
   return (
-    <PageBackground color={light}>
-      <PageContainer>
-        <HeadingContainer>
-          <StyledHeading color={dark}>Colour Scheme Generator </StyledHeading>
-          <StyledButton
-            onClick={() => setPalette(getRandomPalette())}
-            color={colours[1]}
-          >
-            New Palette
-          </StyledButton>
-        </HeadingContainer>
-        <StyledP>
-          Randomly-generated colour palettes based on{' '}
-          <StyledLink
-            href="https://en.wikipedia.org/wiki/Color_scheme"
-            target="_blank"
-            rel="noreferrer"
-            color={colours[1]}
-          >
-            colour wheel theory
-          </StyledLink>
-          . Use these anywhere!
-        </StyledP>
-        <Palette colours={colours} light={light} dark={dark} />
-      </PageContainer>
-      <ToastContainer hideProgressBar={true} autoClose={2000} />
-    </PageBackground>
+    <ThemeProvider theme={theme}>
+      <PageBackground>
+        <PageContainer>
+          <HeadingContainer>
+            <StyledHeading>Colour Scheme Generator </StyledHeading>
+            <StyledButton onClick={() => newPalette()}>
+              New Palette
+            </StyledButton>
+            <StyledButton onClick={() => toggleDarkMode()}>
+              Toggle Mode
+            </StyledButton>
+          </HeadingContainer>
+          <StyledP>
+            Randomly-generated colour palettes based on{' '}
+            <StyledLink
+              href="https://en.wikipedia.org/wiki/Color_scheme"
+              target="_blank"
+              rel="noreferrer"
+            >
+              colour wheel theory
+            </StyledLink>
+            . Use these anywhere!
+          </StyledP>
+          <Palette />
+        </PageContainer>
+        <ToastContainer hideProgressBar={true} autoClose={2000} />
+      </PageBackground>
+    </ThemeProvider>
   );
 };
 

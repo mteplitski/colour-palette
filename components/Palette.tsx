@@ -2,12 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import device from '../util/device';
 import { toast } from 'react-toastify';
-
-interface PaletteProps {
-  colours: string[];
-  light?: string;
-  dark?: string;
-}
+import { usePaletteContext } from '../contexts/PaletteContext';
 
 interface ColourCardProps {
   colour: string;
@@ -50,12 +45,12 @@ const ColourCardContainer = styled.div`
 
   @media ${device.tablet} {
     padding: 8px;
-    border: 1px solid white;
+    border: 1px solid transparent;
     border-radius: 16px;
 
     &:hover {
       cursor: pointer;
-      border: 1px solid black;
+      border: 1px solid grey;
     }
   }
 `;
@@ -63,6 +58,7 @@ const ColourCardContainer = styled.div`
 const ColourCardLabel = styled.h3`
   text-align: center;
   font-size: 16px;
+  color: ${({ theme }) => theme.text};
 
   @media ${device.mobileL} {
     font-size: 24px;
@@ -90,15 +86,23 @@ const ColourCard = ({ colour, label }: ColourCardProps) => (
   </ColourCardContainer>
 );
 
-const Palette = ({ colours, light, dark }: PaletteProps) => (
-  <PaletteContainer>
-    <ColourCard key={colours[0]} colour={colours[0]} label="Main Colour" />
-    {light && <ColourCard key={light} colour={light} label="Background" />}
-    {dark && <ColourCard key={dark} colour={dark} label="Text" />}
-    {colours.slice(1).map((colour, index) => (
-      <ColourCard key={colour} colour={colour} label={`Accent ${index + 1}`} />
-    ))}
-  </PaletteContainer>
-);
+const Palette = () => {
+  const { theme } = usePaletteContext();
+
+  return (
+    <PaletteContainer>
+      <ColourCard key="main" colour={theme.main} label="Main Colour" />
+      <ColourCard
+        key="background"
+        colour={theme.pageBackground}
+        label="Background"
+      />
+      <ColourCard key="text" colour={theme.text} label="Text" />
+      {theme.accents.map((colour, index) => (
+        <ColourCard key={index} colour={colour} label={`Accent ${index + 1}`} />
+      ))}
+    </PaletteContainer>
+  );
+};
 
 export default Palette;
