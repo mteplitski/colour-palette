@@ -2,7 +2,7 @@
 
 > Note: This app is a personal project and is currently unfinished! However, it is still available for viewing at [this link](https://colour-palette.vercel.app/).
 
-Create a beautiful colour palette for your web page or project! See colours in dark mode and light mode.
+Generate a beautiful colour palette for your web page or project! See colours in dark mode and light mode, and every colour scheme is accessible to colour-blind folks.
 
 ### Stack
 - Typescript
