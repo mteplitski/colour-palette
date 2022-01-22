@@ -7,6 +7,8 @@ import { usePaletteContext } from '../contexts/PaletteContext';
 
 const PageBackground = styled.div`
   width: 100%;
+  height: 100vh;
+  overflow-y: scroll;
   background-color: ${({ theme }) => theme.pageBackground};
   padding: 24px 24px 0;
   display: flex;
