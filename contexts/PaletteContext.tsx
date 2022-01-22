@@ -7,6 +7,7 @@ import {
   getThemeFromPalette,
   DEFAULT_PALETTE,
 } from '../util';
+import { ThemeProvider } from 'styled-components';
 
 type PaletteContextState = {
   palette: Nullable<Palette>;
@@ -34,9 +35,7 @@ export const PaletteContextProvider: React.FC = ({ children }) => {
   const [mode, setMode] = useState('light');
 
   const newPalette = () => {
-    const newPalette = getRandomPalette();
-    setPalette(newPalette);
-    setTheme(getThemeFromPalette(newPalette, mode));
+    setPalette(getRandomPalette());
   };
 
   const toggleDarkMode = () => {
@@ -44,6 +43,9 @@ export const PaletteContextProvider: React.FC = ({ children }) => {
   };
 
   useEffect(() => {
+    if (palette === DEFAULT_PALETTE) {
+      setPalette(getRandomPalette());
+    }
     setTheme(getThemeFromPalette(palette, mode));
   }, [palette, mode]);
 
@@ -56,6 +58,8 @@ export const PaletteContextProvider: React.FC = ({ children }) => {
   };
 
   return (
-    <PaletteContext.Provider value={state}>{children}</PaletteContext.Provider>
+    <PaletteContext.Provider value={state}>
+      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+    </PaletteContext.Provider>
   );
 };
