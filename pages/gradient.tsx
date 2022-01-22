@@ -20,7 +20,7 @@ const Gradient = styled.div`
 `;
 
 const GradientPage = () => {
-  const { newPalette, toggleDarkMode, theme } = usePaletteContext();
+  const { newPalette, theme } = usePaletteContext();
 
   return (
     <>
